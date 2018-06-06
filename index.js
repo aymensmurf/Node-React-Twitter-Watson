@@ -8,26 +8,19 @@ var T = new Twit(config);
 
 var params = {
     q: "from:Ninja",
-    count: 100
+    count: 3
 }
 
 app.get('/api/tweets', (req, res) => {
+    console.log('ok');
     var fetchedTweets = T.get('search/tweets', params, (err, data, response) => {  
         var stats = data.statuses;
 
-        var tweets = [
-            {
-                text: "",
-                screen_name: ""
-            }
-        ];
-
-        for (var i in stats){
-            tweets[i] = stats[i].text;
-        }
+        var tweets = stats.map(({text, user : {screen_name}}) => ({text, screen_name}));
 
         res.json(tweets);
     });
 });
 
 app.listen(port, () => console.log(`App is up and running on ${port}`));
+
