@@ -11,7 +11,7 @@ app.get('/api/tweets/:keyward', (req, res) => {
 
     var params = {
         q: req.params.keyward,
-        count: 20
+        count: 3
     }
 
     T.get('search/tweets', params, (err, data, response) => {  
