@@ -6,14 +6,15 @@ const config = require('./config');
 var port = process.env.PORT || 5000;
 var T = new Twit(config);
 
-var params = {
-    q: "from:Ninja",
-    count: 3
-}
+app.get('/api/tweets/:keyward', (req, res) => {
+    console.log(req.params);
 
-app.get('/api/tweets', (req, res) => {
-    console.log('ok');
-    var fetchedTweets = T.get('search/tweets', params, (err, data, response) => {  
+    var params = {
+        q: req.params.keyward,
+        count: 20
+    }
+
+    T.get('search/tweets', params, (err, data, response) => {  
         var stats = data.statuses;
 
         var tweets = stats.map(function(item){
