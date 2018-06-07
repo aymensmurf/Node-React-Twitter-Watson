@@ -16,9 +16,15 @@ app.get('/api/tweets', (req, res) => {
     var fetchedTweets = T.get('search/tweets', params, (err, data, response) => {  
         var stats = data.statuses;
 
-        var tweets = stats.map(({text, user : {screen_name}}) => ({text, screen_name}));
+        var tweets = stats.map(function(item){
+            return {
+                text : item.text,
+                screen_name: item.user.screen_name
+            }
+        });
 
-        res.json(tweets);
+        //var tweets = stats.map(({text, user : {screen_name}}) => ({text, screen_name}));
+        res.send(tweets); //res.json(tweets);
     });
 });
 

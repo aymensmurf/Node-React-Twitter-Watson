@@ -1,0 +1,6 @@
+{
+  "name": "MySearch",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./MySearch.js"
+}

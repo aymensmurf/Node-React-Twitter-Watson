@@ -20,7 +20,12 @@ export default {
       name: 'Trends',
       url: '/Trends',
       icon: 'icon-chart',
-    },  
+    },
+    {
+      name: 'MySearch',
+      url: '/MySearch',
+      icon: 'icon-social-twitter',
+    }, 
   
   ],
 };

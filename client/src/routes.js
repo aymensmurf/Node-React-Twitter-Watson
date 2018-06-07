@@ -195,6 +195,11 @@ const Trends = Loadable({
   loading: Loading,
 });
 
+const MySearch = Loadable({
+  loader: () => import('./views/MySearch'),
+  loading: Loading,
+});
+
 // https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
 const routes = [
   { path: '/', exact: true, name: 'Home', component: DefaultLayout },
@@ -203,6 +208,7 @@ const routes = [
   { path: '/groups', name: 'Groups', component: Groups },
   { path: '/Trends', name: 'Trends', component: Trends },
   { path: '/profile', name: 'profile', component: Profile },
+  { path: '/Mysearch', name: 'MySearch', component: MySearch },
 
   
   { path: '/theme', exact: true, name: 'Theme', component: Colors },
