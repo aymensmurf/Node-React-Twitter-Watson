@@ -31,8 +31,6 @@ import {
 import Widget03 from '../../views/Widgets/Widget03'
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
- 
- 
 
 const brandPrimary = getStyle('--primary')
 const brandSuccess = getStyle('--success')
@@ -84,8 +82,6 @@ const makeSparkLineData = (dataSetNo, variant) => {
   return () => data;
 };
 
-
-
 const sparklineChartOpts = {
   tooltips: {
     enabled: false,
@@ -123,8 +119,6 @@ const sparklineChartOpts = {
 class Search extends Component {
   constructor(props) {
     super(props);
-
- 
   }
 
  
@@ -134,31 +128,33 @@ class Search extends Component {
     return (
     
       <div className="animated fadeIn">
-        <Row className="mb-3">
 
+        <Row className="mb-3">
           <Col xs="12" md="12" style={{width:'100%'}}  >
             <div style={{backgroundColor:'white',height:150,borderRadius:20}}>
-            <Row >
-            <img src="assets/img/avatars/5.jpg" class="img-avatar" style={{width:100,margin:29,marginLeft:60}}/>
-            <Col>
-              <h1 style={{marginTop:32}}>Danielle Virgo</h1>
-              <h4>09/05/1992</h4>
-            </Col>
-            <Col>
-              <h1 style={{marginTop:32}}>Date of analysis</h1>
-              <h4> 09/05/2018</h4>
-            </Col>
+              <Row >
+                <div className="avatar" style={{width:100, marginTop: 20, marginLeft:40}}>
+                  <img src="assets/img/avatars/5.jpg" class="img-avatar"/>
+                </div>
 
-            <Col>
-              <h1 style={{marginTop:32}}>Analysed Words </h1>
-              <h4>512</h4>
-            </Col>
-            </Row>
+                <Col>
+                  <h1 style={{marginTop:32}}>Danielle Virgo</h1>
+                  <h4>09/05/1992</h4>
+                </Col>
 
+                <Col>
+                  <h1 style={{marginTop:32}}>Date of analysis</h1>
+                  <h4> 09/05/2018</h4>
+                </Col>
+                
+                <Col>
+                  <h1 style={{marginTop:32}}>Analysed Words </h1>
+                  <h4>512</h4>
+                </Col>
+              </Row>
             </div>
           </Col>
-         
-          </Row>
+        </Row>
 
         <Row>
           <Col xs="12" md="8">

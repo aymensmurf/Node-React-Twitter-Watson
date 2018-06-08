@@ -44,13 +44,13 @@ const API = '/api/tweets/';
 class MySearch extends Component {
   constructor(props) {
     super(props);
-    this.navprofile = this.navprofile.bind(this);
 
     this.state = {
       tweets: [],
       isLoading: false,
     }
 
+    this.navMyTweets = this.navMyTweets.bind(this);
   }
 
   getTweets = async(e) => {
@@ -65,81 +65,14 @@ class MySearch extends Component {
 
   }
 
-  // componentDidMount(){
-  //   this.setState({isLoading: true});
-
-  //   fetch(API + "allthework")
-  //     .then(res => res.json())
-  //     .then(tweets => this.setState({tweets, isLoading:false}));
-  // }
-
-  navprofile(){
-  this.props.history.push('/Profile');
+  navMyTweets(screen_name, profile_image_url){
+    localStorage.setItem('screen_name', screen_name);
+    localStorage.setItem('profile_image_url', profile_image_url);
+    this.props.history.push('/MyTweets');
   }
  
 
   render() {
-
-    if (this.state.isLoading){
-      return(
-        <div className="animated fadeIn">
- 
-        <Row>
-          <Col xs="12" md="12">
-           <Card>
-              <CardHeader>
-                <strong className="text-center">Tweets Search ...</strong>
-              </CardHeader>
-              <CardBody>
-                <h1 className="text-center mb-3">Search for Tweets</h1>
-                <FormGroup row>
-                  <Col md="12">
-                    <form onSubmit={this.onSubmit} method="GET">
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">
-                          <Button type="submit" color="primary"><i className="fa fa-search"></i> Search</Button>
-                        </InputGroupAddon>
-                        <Input type="text" ref="keyword" id="input1-group2" name="input1-group2" placeholder="Keyword" />
-                      </InputGroup>
-                    </form>
-                  </Col>
-                </FormGroup>
-              </CardBody>
-              <CardFooter>
-
-              </CardFooter>
-            </Card>
-          
-          </Col>
-        </Row>
-
-        <Row>
-          <Col xs="12" md="12">
-            <Card>
-              <CardBody>
-                <Table hover responsive className="table-outline mb-0 d-none d-sm-table">
-                  <thead className="thead-light">
-                    <tr>
-                      <th className="text-center"><i className="icon-people"></i></th>
-                      <th className="text-center">Tweet</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                      <tr>
-                        <td colspan="2" className="text-center">Loading ...</td>
-                      </tr>
-                  </tbody>
-                </Table>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-        
-
-      </div>
-      );
-    }
-
     return (
       <div className="animated fadeIn">
  
@@ -164,11 +97,8 @@ class MySearch extends Component {
                   </Col>
                 </FormGroup>
               </CardBody>
-              <CardFooter>
-
-              </CardFooter>
+              <CardFooter></CardFooter>
             </Card>
-          
           </Col>
         </Row>
 
@@ -180,18 +110,30 @@ class MySearch extends Component {
                   <thead className="thead-light">
                     <tr>
                       <th className="text-center"><i className="icon-people"></i></th>
+                      <th className="text-center">User</th>
                       <th className="text-center">Tweet</th>
+                      <th className="text-center">Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {
+                    {this.state.isLoading ? (
+                      <tr>
+                        <td colspan="4" className="text-center">Loading ...</td>
+                      </tr>
+                    ):(
                       this.state.tweets.map( (tweets) =>
                         <tr>
-                          <td>{tweets.screen_name}</td>
-                          <td>{tweets.text}</td>
+                          <td className="text-center">
+                            <div className="avatar">
+                              <img src={tweets.profile_image_url} className="img-avatar"/>                         
+                            </div>
+                          </td>
+                          <td className="text-center">{tweets.screen_name}</td>
+                          <td className="text-center">{tweets.text}</td>
+                          <td className="text-center"><Button type="submit" color="primary" onClick={() => {this.navMyTweets(tweets.screen_name, tweets.profile_image_url)}} >Analyse</Button></td>
                         </tr>
                       )
-                    }
+                    )}
                   </tbody>
                 </Table>
               </CardBody>
