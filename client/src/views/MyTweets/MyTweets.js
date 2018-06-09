@@ -41,6 +41,7 @@ class MyTweets extends Component {
     this.state = {
       tweets: [],
       isLoading: false,
+      contanieruser : ''
     }
 
   }
@@ -51,7 +52,13 @@ class MyTweets extends Component {
     const keyword = localStorage.getItem('screen_name')
     fetch(API + encodeURI(keyword))
       .then(res => res.json())
-      .then(tweets => this.setState({tweets, isLoading:false})); 
+      .then(tweets => 
+        {
+          this.setState({tweets, isLoading:false}) ;
+          var var1 = tweets[0];
+          this.setState({contanieruser : var1});
+        }
+      ); 
   }
 
   render() {
@@ -59,22 +66,50 @@ class MyTweets extends Component {
     return (
     
       <div className="animated fadeIn">
-
-        <Row className="mb-3">
-          <Col xs="12" md="12" style={{width:'100%'}}  >
-            <div style={{backgroundColor:'white',height:150,borderRadius:20}}>
-              <Row >
-                <div className="avatar" style={{width:100, marginTop: 20, marginLeft:40}}>
-                  <img src={localStorage.getItem('profile_image_url')} className="img-avatar" style={{width:100}}/>
+        <Row style={{backgroundColor:'white', borderRadius:20, marginBottom:20, paddingBottom:20}}>
+          <Col md="2">
+            <div className="avatar" style={{width:100, marginTop:20}}>
+              <img src={localStorage.getItem('profile_image_url')} className="img-avatar" style={{width:100}}/>
+              {this.state.isLoading 
+                ? 
+                  <Col className="text-center">Loading ...</Col>
+                :
+                <div className="text-center">
+                  <h1>{this.state.contanieruser.user_name}</h1>
+                  <p>@{localStorage.getItem('screen_name')}</p>
                 </div>
-
-                <Col>
-                  <h1 style={{marginTop:32}}>{localStorage.getItem('screen_name')}</h1>
-                  <h4>09/05/1992</h4>
-                </Col>
-
-              </Row>
+              }
             </div>
+          </Col>
+          <Col md="10" style={{paddingTop:60}}>
+            {this.state.isLoading 
+              ? 
+                <Col className="text-center">Loading ...</Col>
+              :
+              <div className="container">
+                <div className="row">
+                  <div className="col-sm">
+                    <h6>Tweets</h6>
+                    <p>{this.state.contanieruser.user_statuses_count}</p>
+                  </div>
+                  <div className="col-sm">
+                    <h6>Following</h6>
+                    <p>{this.state.contanieruser.user_friends_count}</p>
+                  </div>
+                  <div className="col-sm">
+                    <h6>Followers</h6>
+                    <p>{this.state.contanieruser.user_followers_count}</p>
+                  </div>
+                  <div className="col-sm">
+                    <h6>Likes</h6>
+                    <p>{this.state.contanieruser.user_favourites_count}</p>
+                  </div>
+                  <div className="col-sm offset-3">
+                    <Button type="submit" color="primary">Analyse</Button>
+                  </div>
+                </div>
+              </div>
+            }
           </Col>
         </Row>
 
