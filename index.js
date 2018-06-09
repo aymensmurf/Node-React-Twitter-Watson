@@ -9,9 +9,11 @@ var T = new Twit(config);
 // const TwitterAPI = "https://api.twitter.com/1.1";
 
 app.get('/api/tweets/:keyward', (req, res) => {
+    console.log("In tweets : " + req.params.keyward);
+
     var params = {
         q: req.params.keyward,
-        count: 3
+        count: 100
     }
 
     T.get('search/tweets', params, (err, data, response) => {  
@@ -31,15 +33,18 @@ app.get('/api/tweets/:keyward', (req, res) => {
 });
 
 app.get('/api/userTweets/:screen_name', (req, res) => {
+    console.log("In userTweets : " + req.params.screen_name,);
+    
     var params = {
         screen_name: req.params.screen_name,
-        count: 3
+        count: 200
     }
 
     T.get('statuses/user_timeline', params, (err, data, response) => {  
         var tweets = data.map(function(item){
             return {
-                text : item.text
+                text : item.text,
+                date : item.created_at
             }
         });
 

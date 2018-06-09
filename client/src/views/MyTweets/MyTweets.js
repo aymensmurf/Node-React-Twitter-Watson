@@ -32,9 +32,26 @@ import Widget03 from '../../views/Widgets/Widget03'
 import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
 import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities'
 
+const API = '/api/userTweets/';
+
 class MyTweets extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      tweets: [],
+      isLoading: false,
+    }
+
+  }
+
+  componentDidMount(){
+    this.setState({isLoading: true});
+
+    const keyword = localStorage.getItem('screen_name')
+    fetch(API + encodeURI(keyword))
+      .then(res => res.json())
+      .then(tweets => this.setState({tweets, isLoading:false})); 
   }
 
   render() {
@@ -48,7 +65,7 @@ class MyTweets extends Component {
             <div style={{backgroundColor:'white',height:150,borderRadius:20}}>
               <Row >
                 <div className="avatar" style={{width:100, marginTop: 20, marginLeft:40}}>
-                  <img src={localStorage.getItem('profile_image_url')}class="img-avatar" style={{width:100}}/>
+                  <img src={localStorage.getItem('profile_image_url')} className="img-avatar" style={{width:100}}/>
                 </div>
 
                 <Col>
@@ -69,9 +86,17 @@ class MyTweets extends Component {
               </CardHeader>
 
               <CardBody>
-                <Row >
+                {this.state.isLoading ? (
+                  <div className="text-center">Loading ...</div>
+                ):(
                   
-                </Row>
+                    this.state.tweets.map( (tweets) =>
+                    <Card>
+                    <CardHeader>{tweets.date}</CardHeader>
+                      <CardBody>{tweets.text}</CardBody> 
+                    </Card>                 
+                    )
+                )}
               </CardBody>
 
               <CardFooter>
