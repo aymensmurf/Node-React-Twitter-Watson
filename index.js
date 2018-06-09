@@ -70,10 +70,7 @@ app.get('/api/userTweets/:screen_name', (req, res) => {
     });
 });
 
-
-
-
-
+//
 //Test************************************************************
 app.get('/api/tweets', (req, res) => {
     var params = {
